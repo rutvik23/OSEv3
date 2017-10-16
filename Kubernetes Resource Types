@@ -1,3 +1,14 @@
 1) Pod : It is a basic unit of work for kubernetes. Pod can have different application container which are relatively tightly coupled.
 Each pod is tied to a node where it is scheduled and remains there until termination or deletion. 
 In case of node failure, identical pods are scheduled on other available nodes in cluster.
+
+2)Service : Service is a logical abstraction which has single IP and port that provide access to a pool of pods.
+Service layer used to connect clients to pods in round-robin fashion.
+Service layer also act as a LoadBalancer in an openshift cluster to manage traffic within the pods.
+
+3)Replication Controller : It is a framework for defining pods that are meant to be horizontically scaled.
+It also includes a pod defination.
+
+4) Physical Volume : Provision of persistent networked storage to pods that can be mounted inside a container to store data.
+
+5) Physical Volume Claim : It represent a request for storage by a pod.

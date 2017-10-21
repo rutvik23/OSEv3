@@ -1,0 +1,7 @@
+   First check if the route url is not local #oc get routes
+                         2) Check service is working or not Curl <serviceip>:8080 
+                         if still now working then issue might be in dns configuration.
+                     
+Troubleshoot your dns server: Check dns entry - /etc/dnsmasq.d/origin-upstream-dns.conf
+Check dns entry - /etc/dnsmasq.conf
+Check dns entry - /etc/sysconfig/network-script/ifcfg-eth0

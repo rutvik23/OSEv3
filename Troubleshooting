@@ -1,7 +1,34 @@
-   First check if the route url is not local #oc get routes
-                         2) Check service is working or not Curl <serviceip>:8080 
-                         if still now working then issue might be in dns configuration.
+## Router Troubleshooting:1)First check if the route url is not local #oc get routes
+                          2) Check service is working or not Curl <serviceip>:8080 
+                          if still now working then issue might be in dns configuration.
                      
 Troubleshoot your dns server: Check dns entry - /etc/dnsmasq.d/origin-upstream-dns.conf
 Check dns entry - /etc/dnsmasq.conf
 Check dns entry - /etc/sysconfig/network-script/ifcfg-eth0
+If dns is working properly, then check the node on which router pod is deployed.Check whether it is schedulable or not.
+
+## Failed to push Image to registry
+1) Check docker-registry pod is running or not.
+ If you delete docker-registry pod to create it once again by replication controler,
+   in that case registry ip will also get change, so you need to restart master service as well.
+     #systemctl restart atomic-openshift-master.
+3) Ensure that route of docker-registry is configured in correct way.
+   In case of insecure registry ,there must --insecure-registry 172.30.0.0/16 parameter in option field.
+   Restart docker and hopefully it will work.
+4) Also check block registry entries.
+   
+## Pod is in creating state
+1) Check: #oc get event ---> There could be an image pullbackoff error.
+2) Pod is not able to schedule on node. ---> Check scheduling configuration. # oc get pods -o wide
+3) Node ouf o resources. --> Make sure that node would be having enough memory for storing docker images and other resources.
+4) SSH on node and try to pull same image manually. ( This will help to troubleshoot)
+5) Check docker configuration and docker logs.
+  #journalctl -u docker
+  # journalct -u --atomic-openshift-node
+6) Docker service is important, if it is down, node will also go down.
+7)Prun is used to delete old container which are not in used so far. Also delete /var/log/messages
+
+
+
+ 
+ 
